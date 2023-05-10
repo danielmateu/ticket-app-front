@@ -1,30 +1,15 @@
 
-import {
-    UploadOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-} from '@ant-design/icons';
-import {
-    Layout,
-    Menu,
-    // Button,
-    // theme
-} from 'antd';
+import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import { Layout, Menu } from 'antd';
 
-import {
-    // BrowserRouter,
-    Routes,
-    Route,
-    Link,
-    Navigate,
-} from "react-router-dom";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
+
 import IngresarPage from './Ingresar';
 import ColaPage from './Cola';
 import CrearTicketPage from './CrearTicket';
+import EscritorioPage from './Escritorio';
 
-const {
-    Sider,
-    Content } = Layout;
+const { Sider, Content } = Layout;
 
 const RouterPage = () => {
 
@@ -39,7 +24,9 @@ const RouterPage = () => {
                 }}
             >
                 <Sider
-                // hidden={false}
+                    // hidden={true}
+                    collapsedWidth={0}
+                    breakpoint="md"
                 >
                     <div className="logo" />
                     <Menu
@@ -82,6 +69,9 @@ const RouterPage = () => {
                             <Route path="/ingresar" element={<IngresarPage />} />
                             <Route path="/cola" element={<ColaPage />} />
                             <Route path="/crear-ticket" element={<CrearTicketPage />} />
+
+                            <Route path='/escritorio' element={<EscritorioPage />} />
+
                             <Route path="*" element={<Navigate to='/' replace />} />
                         </Routes>
                     </Content>
