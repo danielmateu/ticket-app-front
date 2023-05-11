@@ -18,7 +18,8 @@ const IngresarPage = () => {
 
     const onFinish = ({ agente, escritorio }) => {
         // console.log('Success:', values);
-        localStorage.setItem('agente', JSON.stringify(agente))
+        // localStorage.setItem('agente', JSON.stringify(agente))
+        localStorage.setItem('agente', (agente))
         localStorage.setItem('escritorio', JSON.stringify(escritorio))
         navigate('/escritorio')
 

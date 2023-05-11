@@ -1,9 +1,10 @@
 import { CloseCircleOutlined, RightCircleTwoTone } from "@ant-design/icons"
 import { Button, Col, Divider, Row, Typography } from "antd"
 import { useHideMenu } from "../hooks/useHideMenu"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Navigate, useNavigate } from "react-router-dom"
 import { getUsuarioStorage } from "../helpers/getUsuarioStorage"
+import { SocketContext } from "../context/SocketContext"
 
 const { Title, Text } = Typography
 
@@ -11,8 +12,9 @@ const EscritorioPage = () => {
 
     useHideMenu(false)
     const navigate = useNavigate()
-
+    const { socket } = useContext(SocketContext)
     const [usuario] = useState(getUsuarioStorage())
+    const [ticket, setTicket] = useState(null)
 
     const salir = () => {
         localStorage.clear()
@@ -21,7 +23,12 @@ const EscritorioPage = () => {
     }
 
     const siguienteTiquet = () => {
-        console.log('siguienteTiquet')
+        // console.log('siguienteTiquet')
+        // console.log(usuario);
+        socket.emit('siguiente-ticket-trabajar', usuario, (ticket) => {
+            // console.log(ticket)
+            setTicket(ticket)
+        })
     }
 
     if (!usuario.agente || !usuario.escritorio) {
@@ -33,15 +40,15 @@ const EscritorioPage = () => {
             <Row>
                 <Col span={20}>
                     <Title level={2}>
-                        {usuario.agente}
+                        Agente: {usuario.agente}
                     </Title>
                     <Text>Usted está trabajando en el escritorio: </Text>
-                    <Text 
+                    <Text
                         type="success"
                         style={{
                             fontSize: 20,
                         }}
-                        >{usuario.escritorio}</Text>
+                    >{usuario.escritorio}</Text>
                 </Col>
 
                 <Col span={4} align="right" >
@@ -58,21 +65,27 @@ const EscritorioPage = () => {
             </Row>
 
             <Divider />
-
-            <Row>
-                <Col>
-                    <Text>Está atendiendo el ticket número: </Text>
-                    <Text
-                        style={{
-                            fontSize: 30,
-                        }}
-                        type="danger"
-                    >
-                        55
-                    </Text>
-                </Col>
-            </Row>
-
+            {
+                ticket ? (<Row>
+                    <Col>
+                        <Text>Está atendiendo el ticket número: </Text>
+                        <Text
+                            style={{
+                                fontSize: 40,
+                            }}
+                            type="danger"
+                        >
+                            {ticket.numero}
+                        </Text>
+                    </Col>
+                </Row>) : (
+                    <Row>
+                        <Col>
+                            <Text>No hay tickets en cola</Text>
+                        </Col>
+                    </Row>
+                )
+            }
             <Row>
                 <Col offset={18} span={6} align="right">
                     <Button
@@ -85,7 +98,6 @@ const EscritorioPage = () => {
                                 alignItems: 'center',
                             }}
                     >
-                        {/* <CloseCircleOutlined /> */}
                         <RightCircleTwoTone />
                         Siguiente
                     </Button>
