@@ -45,7 +45,7 @@ const RouterPage = () => {
                                 key: '2',
                                 icon: <VideoCameraOutlined />,
                                 // label: 'Cola',
-                                label: <Link to="/cola">Cola</Link>,
+                                label: <Link to="/cola">Cola de tiquets</Link>,
                             },
                             {
                                 key: '3',
