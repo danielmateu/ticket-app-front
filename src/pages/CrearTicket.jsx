@@ -1,8 +1,12 @@
+import { Row } from "antd"
 
 
 const CrearTicketPage = () => {
     return (
-        <div>CrearTicketPage</div>
+        <>
+            <Row>
+            </Row>
+        </>
     )
 }
 
