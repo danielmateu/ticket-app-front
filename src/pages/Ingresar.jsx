@@ -1,7 +1,9 @@
 import { SaveOutlined } from '@ant-design/icons';
 import { Button, Divider, Form, Input, InputNumber, Typography } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useHideMenu } from '../hooks/useHideMenu';
+import { useState } from 'react';
+import { getUsuarioStorage } from '../helpers/getUsuarioStorage';
 
 
 const { Title, Text } = Typography
@@ -9,17 +11,26 @@ const { Title, Text } = Typography
 const IngresarPage = () => {
 
     useHideMenu(false)
-
     const navigate = useNavigate()
 
-    const onFinish = (values) => {
-        console.log('Success:', values);
+    const [usuario] = useState(getUsuarioStorage())
+    // console.log(usuario);
+
+    const onFinish = ({ agente, escritorio }) => {
+        // console.log('Success:', values);
+        localStorage.setItem('agente', JSON.stringify(agente))
+        localStorage.setItem('escritorio', JSON.stringify(escritorio))
         navigate('/escritorio')
+
     };
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
+    if (usuario.agente && usuario.escritorio) {
+        return <Navigate to='/escritorio' />
+    }
 
     return (
         <>
@@ -56,7 +67,7 @@ const IngresarPage = () => {
             >
                 <Form.Item
                     label="Nombre del usuario"
-                    name="Usuario"
+                    name="agente"
                     // placeholder="Ingrese su nombre"
                     rules={[
                         {
@@ -70,7 +81,7 @@ const IngresarPage = () => {
 
                 <Form.Item
                     label="Número de escritorio"
-                    name="Escritorio"
+                    name="escritorio"
                     // placeholder="Ingrese su nombre"
                     rules={[
                         {
@@ -84,19 +95,6 @@ const IngresarPage = () => {
                         max={40}
                     />
                 </Form.Item>
-
-                {/* <Form.Item
-                label="Contraseña"
-                name="password"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Inserte su contraseña!',
-                    },
-                ]}
-            >
-                <Input.Password />
-            </Form.Item> */}
 
                 <Form.Item
                     wrapperCol={{

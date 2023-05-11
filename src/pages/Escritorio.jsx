@@ -1,19 +1,31 @@
 import { CloseCircleOutlined, RightCircleTwoTone } from "@ant-design/icons"
 import { Button, Col, Divider, Row, Typography } from "antd"
 import { useHideMenu } from "../hooks/useHideMenu"
+import { useState } from "react"
+import { Navigate, useNavigate } from "react-router-dom"
+import { getUsuarioStorage } from "../helpers/getUsuarioStorage"
 
 const { Title, Text } = Typography
 
 const EscritorioPage = () => {
 
     useHideMenu(false)
+    const navigate = useNavigate()
+
+    const [usuario] = useState(getUsuarioStorage())
 
     const salir = () => {
-        console.log('salir')
+        localStorage.clear()
+        // window.location = '/ingresar'
+        navigate("/ingresar", { replace: true });
     }
 
     const siguienteTiquet = () => {
         console.log('siguienteTiquet')
+    }
+
+    if (!usuario.agente || !usuario.escritorio) {
+        return <Navigate to='/ingresar' />
     }
 
     return (
@@ -21,10 +33,15 @@ const EscritorioPage = () => {
             <Row>
                 <Col span={20}>
                     <Title level={2}>
-                        Dani
+                        {usuario.agente}
                     </Title>
-                    <Text>Usted está trabajando en el escritorio:</Text>
-                    <Text type="success">5</Text>
+                    <Text>Usted está trabajando en el escritorio: </Text>
+                    <Text 
+                        type="success"
+                        style={{
+                            fontSize: 20,
+                        }}
+                        >{usuario.escritorio}</Text>
                 </Col>
 
                 <Col span={4} align="right" >
@@ -44,7 +61,7 @@ const EscritorioPage = () => {
 
             <Row>
                 <Col>
-                    <Text>Está atendiendo el ticket número:</Text>
+                    <Text>Está atendiendo el ticket número: </Text>
                     <Text
                         style={{
                             fontSize: 30,
