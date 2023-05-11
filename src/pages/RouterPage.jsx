@@ -8,23 +8,25 @@ import IngresarPage from './Ingresar';
 import ColaPage from './Cola';
 import CrearTicketPage from './CrearTicket';
 import EscritorioPage from './Escritorio';
+import { useContext } from 'react';
+import { UIContext } from '../context/UIContext';
 
 const { Sider, Content } = Layout;
 
 const RouterPage = () => {
 
+    const { ocultarMenu } = useContext(UIContext)
+
     return (
 
         <>
-
-
             <Layout
                 style={{
                     minHeight: '100vh',
                 }}
             >
                 <Sider
-                    // hidden={true}
+                    hidden={ocultarMenu}
                     collapsedWidth={0}
                     breakpoint="md"
                 >

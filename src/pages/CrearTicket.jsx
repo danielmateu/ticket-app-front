@@ -1,9 +1,12 @@
 import { DownloadOutlined } from "@ant-design/icons"
 import { Button, Col, Divider, Row, Typography } from "antd"
+import { useHideMenu } from "../hooks/useHideMenu"
 
 const { Title, Text } = Typography
 
 const CrearTicketPage = () => {
+
+    useHideMenu(true)
 
     const nuevoTicket = () => {
         console.log('Nuevo Ticket')
@@ -43,15 +46,18 @@ const CrearTicketPage = () => {
                     <Text level={2}>
                         Su número
                     </Text>
-                    <Divider/>
-                    <Text
-                        type="success"
-                        style={{
-                            fontSize: 55,
-                        }}
-                    >   
-                        55
-                    </Text>
+                    {/* <Divider/> */}
+                    <Divider>
+                        <Text
+                            type="success"
+                            style={{
+                                fontSize: 55,
+                            }}
+                        >
+
+                            55
+                        </Text>
+                    </Divider>
                 </Col>
             </Row>
 

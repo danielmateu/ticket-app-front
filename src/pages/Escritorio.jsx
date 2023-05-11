@@ -1,9 +1,12 @@
 import { CloseCircleOutlined, RightCircleTwoTone } from "@ant-design/icons"
 import { Button, Col, Divider, Row, Typography } from "antd"
+import { useHideMenu } from "../hooks/useHideMenu"
 
 const { Title, Text } = Typography
 
 const EscritorioPage = () => {
+
+    useHideMenu(false)
 
     const salir = () => {
         console.log('salir')

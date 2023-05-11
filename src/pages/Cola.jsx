@@ -1,4 +1,5 @@
 import { Col, Divider, List, Row, Tag, Typography } from "antd";
+import { useHideMenu } from "../hooks/useHideMenu";
 
 const { Title, Text } = Typography
 
@@ -42,6 +43,8 @@ const data = [
 
 
 const ColaPage = () => {
+
+    useHideMenu(true)
     return (
         <>
             <Title level={1}>Atendiendo al cliente</Title>
